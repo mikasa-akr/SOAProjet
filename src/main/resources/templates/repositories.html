@@ -1,0 +1,72 @@
+<!-- src/main/resources/templates/repositories.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repositories</title>
+    <style>
+        body {
+            background-color: #000000; /* Dark background color */
+            color: #ffffff; /* White text color */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            border: 1px solid #5000ff; /* Darker background color for each item */
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        img {
+            max-width: 30px; /* Limit width of the avatar image */
+            border-radius: 20%; /* Make avatar image round */
+            border: 1px solid antiquewhite;
+            margin-right: 10px; /* Add margin to the right of the image */
+        }
+
+        a {
+            color: #5000ff; /* Blue color for links */
+            text-decoration: none;
+            margin-left: auto; /* Push the <a> tag to the right */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover for links */
+        }
+        button{
+            background-color: #000000; /* Blue background color for the button */
+            color: #ffffff; /* White text color for the button */
+            border: 1px solid blanchedalmond;
+            padding: 8px 16px;
+            border-radius: 5px;
+            margin-left: 950px;
+
+        }
+    </style>
+</head>
+<body>
+
+<div th:if="${repositoriesList}">
+    <h3>Results:</h3>
+    <ul>
+        <li th:each="repo : ${repositoriesList}">
+            <img th:src="${repo.owner.avatar_url}" alt="Owner's Avatar"/>
+            <a th:href="${repo.html_url}" target="_blank" th:text="${repo.full_name}"></a><br>
+            <span th:text="${repo.description}"></span><br>
+            <span th:text="${repo.language}"></span><br>
+            <button type="submit">Save</button>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

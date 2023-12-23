@@ -1,0 +1,55 @@
+<!-- src/main/resources/templates/search.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repository Search</title>
+    <style>
+        body {
+            background-image: url("https://pbs.twimg.com/media/FhKAmICUoAYd1EC?format=jpg&name=4096x4096");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            color: #3498db;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #search-bar {
+            padding: 10px;
+            border: 2px solid #8e44ad; /* Purple border */
+            border-radius: 5px;
+            background-color: #000000; /* Dark background */
+            color: #ecf0f1;
+            width: 400px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        #search-button {
+            padding: 10px;
+            border: 2px solid #8e44ad; /* Purple border */
+            border-radius: 5px;
+            background-color: #8e44ad; /* Purple background */
+            color: #ecf0f1;
+            cursor: pointer;
+            outline: none;
+        }
+        #search-button:hover {
+            background-color: #6c3483; /* Darker purple on hover */
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form action="/search" method="post">
+        <input id="search-bar" type="text" name="search" placeholder="Enter GitHub username" required>
+        <button id="search-button" type="submit">Search</button>
+    </form>
+</div>
+
+</body>
+</html>
