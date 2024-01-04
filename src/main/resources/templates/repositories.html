@@ -49,13 +49,12 @@
             border: 1px solid blanchedalmond;
             padding: 8px 16px;
             border-radius: 5px;
-            margin-left: 950px;
 
         }
     </style>
 </head>
 <body>
-
+<a href="http://localhost:5000/saved" >Saved</a>
 <div th:if="${repositoriesList}">
     <h3>Results:</h3>
     <ul>
@@ -64,9 +63,55 @@
             <a th:href="${repo.html_url}" target="_blank" th:text="${repo.full_name}"></a><br>
             <span th:text="${repo.description}"></span><br>
             <span th:text="${repo.language}"></span><br>
-            <button type="submit">Save</button>
-        </li>
+
+            <!-- Add a "Save" button with an onclick event -->
+            <button type="submit" onclick="saveRepository('${repo.id}', '${repo.full_name}','${repo.description}', '${repo.language}','${repo.owner.avatar_url}', '${repo.html_url}')">Save</button></li>
     </ul>
 </div>
+
+<!-- JavaScript to handle saving repositories -->
+<!-- JavaScript to handle saving repositories -->
+<!-- JavaScript to handle saving repositories -->
+<script>
+    function saveRepository(id, fullName, description, language, avatarUrl, htmlUrl) {
+        // Create a JSON object with basic repository information
+        var repository = {
+            id: id,
+            full_name: fullName,
+            description: description,
+            language: language,
+            avatar_url: avatarUrl,
+            html_url: htmlUrl
+        };
+
+        // Log the repository data to the console
+        console.log('Repository data:', repository);
+
+        // Send a POST request to the "/api/fichier" endpoint in the first project's API
+        fetch('http://localhost:8080/api/fichier', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(repository),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Repository saved successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error saving repository.');
+            });
+    }
+
+</script>
+
+
 </body>
 </html>

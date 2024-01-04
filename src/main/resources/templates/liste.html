@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved repositories</title>
+    <style>
+        body {
+            background-color: #000000; /* Dark background color */
+            color: #ffffff; /* White text color */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            border: 1px solid #5000ff; /* Darker background color for each item */
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        img {
+            max-width: 30px; /* Limit width of the avatar image */
+            border-radius: 20%; /* Make avatar image round */
+            border: 1px solid antiquewhite;
+            margin-right: 10px; /* Add margin to the right of the image */
+        }
+
+        a {
+            color: #5000ff; /* Blue color for links */
+            text-decoration: none;
+            margin-left: auto; /* Push the <a> tag to the right */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover for links */
+        }
+    </style>
+</head>
+<body>
+<a href="http://localhost:5000/search" >Search</a>
+<div th:if="${repositories}">
+<h1>Saved repositories</h1>
+<ul>
+    <!-- Thymeleaf iteration to display Fichier information -->
+    <li th:each="repo : ${repositories}">
+        <img th:src="${repo.avatar_url}" alt="Owner's Avatar"/>
+        <a th:href="${repo.html_url}" target="_blank" th:text="${repo.full_name}"></a><br>
+        <span th:text="${repo.description}"></span><br>
+        <span th:text="${repo.language}"></span><br>
+        <button type="button" onclick="deleteRepository('${repo.id}')">Delete</button>
+    </li>
+</ul>
+</div>
+<script>
+    function deleteRepository(Repoid) {
+        // Send a DELETE request to the "/api/fichier/{id}" endpoint
+        fetch(`http://localhost:8080/api/fichier/${Repoid}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Repository deleted successfully!');
+                // Optionally, you can reload the list of repositories after deletion
+                // For example, by calling a method to refresh the repository list
+                // refreshRepositoryList();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error deleting repository.');
+            });
+    }
+
+</script>
+</body>
+</html>

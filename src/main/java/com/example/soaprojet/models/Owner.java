@@ -1,4 +1,4 @@
-package com.example.soaprojet.Entity;
+package com.example.soaprojet.models;
 
 import lombok.*;
 
@@ -7,6 +7,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Owner {
-    private String login;
     private String avatar_url;
 }

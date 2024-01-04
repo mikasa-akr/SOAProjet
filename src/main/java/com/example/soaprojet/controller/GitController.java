@@ -1,17 +1,14 @@
 package com.example.soaprojet.controller;
 
-import com.example.soaprojet.Entity.Owner;
-import com.example.soaprojet.Entity.Repositories;
-import com.example.soaprojet.Entity.Search;
+import com.example.soaprojet.models.Fichier;
+import com.example.soaprojet.models.Search;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,11 +20,16 @@ public class GitController {
     @Value("${github.token}")
     private String githubToken;
 
+    @Value("http://localhost:8080")
+    private String ApiUrl;
+
     @GetMapping("/search")
     private ModelAndView showSearchPage() {
         ModelAndView modelAndView = new ModelAndView("search");
         return modelAndView;
     }
+
+// ...
 
     @PostMapping("/search")
     private ModelAndView searchRepositories(@RequestParam String search, Model model) {
@@ -45,4 +47,21 @@ public class GitController {
         modelAndView.addObject("repositoriesList", searchRepositories.getItems());
         return modelAndView;
     }
+
+
+    @GetMapping("/saved")
+    public String listeSaved(Model model) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        // GET Request to the first project's API
+        List<Fichier> fichiers = restTemplate.getForObject(ApiUrl + "/api/fichier", List.class);
+
+        // Log or print the retrieved data
+        System.out.println("Retrieved fichiers: " + fichiers);
+
+        model.addAttribute("repositories", fichiers);  // Use "fichiers" instead of "saveds"
+        return "liste";
+    }
+
+
 }

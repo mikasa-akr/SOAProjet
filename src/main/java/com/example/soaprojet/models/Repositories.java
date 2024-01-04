@@ -1,4 +1,4 @@
-package com.example.soaprojet.Entity;
+package com.example.soaprojet.models;
 
 import lombok.*;
 
